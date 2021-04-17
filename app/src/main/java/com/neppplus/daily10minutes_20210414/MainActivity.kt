@@ -29,7 +29,7 @@ class MainActivity : BaseActivity() {
 
     fun getProjectListFromServer() {
 
-        ServerUtil.getRequestProjectList(mContext, object : ServerUtil.JsonResponseHandler{
+        ServerUtil.getRequestProjectList(mContext, object : ServerUtil.JsonResponseHandler {
             override fun onResponse(jsonObj: JSONObject) {
 
                 val dataObj = jsonObj.getJSONObject("data")
@@ -41,7 +41,7 @@ class MainActivity : BaseActivity() {
 
                     val project = Project.getProjectFromJson(projectObj)
 
-
+                    mProject.add(project)
 
                 }
 
