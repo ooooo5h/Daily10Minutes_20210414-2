@@ -2,13 +2,16 @@ package com.neppplus.daily10minutes_20210414
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.neppplus.daily10minutes_20210414.adapters.ProjectAdapter
 import com.neppplus.daily10minutes_20210414.datas.Project
 import com.neppplus.daily10minutes_20210414.utils.ServerUtil
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
 
-    val mProject = ArrayList<Project>()
+    val mProjects = ArrayList<Project>()
+    lateinit var mProjectAdapter: ProjectAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,6 +19,7 @@ class MainActivity : BaseActivity() {
         setupEvents()
         setValues()
     }
+
     override fun setupEvents() {
 
     }
@@ -23,7 +27,8 @@ class MainActivity : BaseActivity() {
     override fun setValues() {
         getProjectListFromServer()
 
-
+        mProjectAdapter = ProjectAdapter(mContext, R.layout.project_list_item, mProjects)
+        projectListView.adapter = mProjectAdapter
 
     }
 
@@ -35,13 +40,18 @@ class MainActivity : BaseActivity() {
                 val dataObj = jsonObj.getJSONObject("data")
                 val projectsArr = dataObj.getJSONArray("projects")
 
-                for ( i  in 0 until projectsArr.length()) {
+                for (i in 0 until projectsArr.length()) {
 
                     val projectObj = projectsArr.getJSONObject(i)
 
                     val project = Project.getProjectFromJson(projectObj)
 
-                    mProject.add(project)
+                    mProjects.add(project)
+
+                }
+                runOnUiThread {
+
+                    mProjectAdapter.notifyDataSetChanged()
 
                 }
 
