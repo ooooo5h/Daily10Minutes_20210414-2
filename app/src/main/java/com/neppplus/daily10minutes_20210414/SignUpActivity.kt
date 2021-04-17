@@ -3,6 +3,9 @@ package com.neppplus.daily10minutes_20210414
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
 import com.neppplus.daily10minutes_20210414.utils.ContextUtil
 import com.neppplus.daily10minutes_20210414.utils.ServerUtil
@@ -19,6 +22,24 @@ class SignUpActivity : BaseActivity() {
 
 
     override fun setupEvents() {
+
+        emailEdt.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                Log.d("문구변경이벤트", s!!)
+
+                emailCheckResultTxt.text = "이메일 중복 확인을 해주세요."
+            }
+
+
+        })
 
         signUpBtn.setOnClickListener {
 
