@@ -55,7 +55,12 @@ class ServerUtil {
 
         }
 
-        fun putRequestSignUp(email: String, pw: String,nickname: String, handler: JsonResponseHandler?        ) {
+        fun putRequestSignUp(
+            email: String,
+            pw: String,
+            nickname: String,
+            handler: JsonResponseHandler?
+        ) {
 
             val urlString = "${HOST_URL}/user"
 
@@ -90,7 +95,7 @@ class ServerUtil {
             })
         }
 
-        fun getRequestEmailCheck(email : String, handler: JsonResponseHandler?) {
+        fun getRequestEmailCheck(email: String, handler: JsonResponseHandler?) {
 
             val urlBuilder = "${HOST_URL}/email_check".toHttpUrlOrNull()!!.newBuilder()
 
@@ -104,7 +109,7 @@ class ServerUtil {
                 .build()
 
             val client = OkHttpClient()
-            
+
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
 
@@ -113,7 +118,7 @@ class ServerUtil {
                 override fun onResponse(call: Call, response: Response) {
 
                     val bodyString = response.body!!.string()
-                    val jsonObj= JSONObject(bodyString)
+                    val jsonObj = JSONObject(bodyString)
 
                     Log.d("서버응답본문", jsonObj.toString())
 
@@ -127,7 +132,7 @@ class ServerUtil {
 
         }
 
-        fun getRequestProjectList(context : Context, handler: JsonResponseHandler?) {
+        fun getRequestProjectList(context: Context, handler: JsonResponseHandler?) {
 
             val urlBuilder = "${HOST_URL}/project".toHttpUrlOrNull()!!.newBuilder()
 
@@ -151,7 +156,7 @@ class ServerUtil {
                 override fun onResponse(call: Call, response: Response) {
 
                     val bodyString = response.body!!.string()
-                    val jsonObj= JSONObject(bodyString)
+                    val jsonObj = JSONObject(bodyString)
 
                     Log.d("서버응답본문", jsonObj.toString())
 
@@ -165,7 +170,7 @@ class ServerUtil {
 
         }
 
-        fun postRequestApplyProject(context: Context, projectId : Int, handler: JsonResponseHandler?) {
+        fun postRequestApplyProject(context: Context, projectId: Int, handler: JsonResponseHandler?) {
 
             val urlString = "${HOST_URL}/project"
 
@@ -202,12 +207,43 @@ class ServerUtil {
 
         }
 
+        fun deleteRequestGiveUpProject(context: Context, projectId: Int, handler: JsonResponseHandler?) {
+
+            val urlBuilder = "${HOST_URL}/project".toHttpUrlOrNull()!!.newBuilder()
+
+            urlBuilder.addEncodedQueryParameter("project_id", projectId.toString())
+
+            val urlString = urlBuilder.build().toString()
+
+            val request = Request.Builder()
+                .url(urlString)
+                .delete()
+                .header("X-Http-Token", ContextUtil.getLoginToken(context))
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+
+                    Log.d("서버응답본문", jsonObj.toString())
+
+                    handler?.onResponse(jsonObj)
+
+                }
 
 
+            })
 
 
-
-
+        }
 
 
     }
