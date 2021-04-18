@@ -9,7 +9,9 @@ class Project(
     var imageUrl : String,
     var description : String,
     var onGoingUserCount : Int,
-    var proofMethod : String) : Serializable{
+    var proofMethod : String) : Serializable {
+
+    val tags = ArrayList<String>()
 
     constructor() : this(0,"", "", "", 0, "")
 
@@ -26,6 +28,16 @@ class Project(
             project.onGoingUserCount = jsonObj.getInt("ongoing_users_count")
 
             project.proofMethod = jsonObj.getString("proof_method")
+
+            val tagsArr = jsonObj.getJSONArray("tags")
+
+            for (index in 0 until tagsArr.length()) {
+
+                val tagObj = tagsArr.getJSONObject(index)
+                val title = tagObj.getString("title")
+
+                project.tags.add(title)
+            }
 
             return project
         }
