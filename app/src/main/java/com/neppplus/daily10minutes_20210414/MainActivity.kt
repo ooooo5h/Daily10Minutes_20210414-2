@@ -26,6 +26,14 @@ class MainActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+        projectListView.setOnItemClickListener { adapterView, view, position, l ->
+
+            val clickedProject = mProjects[position]
+
+//            val myIntent = Intent(mContext, 이동화면)
+        }
+
+
         logoutBtn.setOnClickListener {
 
             val alert = AlertDialog.Builder(mContext)
@@ -44,8 +52,6 @@ class MainActivity : BaseActivity() {
             alert.show()
 
         }
-
-
 
     }
 
