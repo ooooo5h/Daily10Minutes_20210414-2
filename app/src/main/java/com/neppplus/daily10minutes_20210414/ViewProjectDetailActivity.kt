@@ -1,7 +1,9 @@
 package com.neppplus.daily10minutes_20210414
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.neppplus.daily10minutes_20210414.datas.Project
 import kotlinx.android.synthetic.main.activity_view_project_detail.*
@@ -34,6 +36,18 @@ class ViewProjectDetailActivity : BaseActivity() {
         userCountTxt.text = "${mProject.onGoingUserCount}명"
 
         proofMethodTxt.text = mProject.proofMethod
+
+        for (tag in mProject.tags) {
+
+            val tagTextView = TextView(mContext)
+            tagTextView.text = "#${tag}"
+            tagTextView.setTextColor(Color.BLUE)
+
+            tagListLayout.addView(tagTextView)
+
+        }
+
+
     }
 
 
