@@ -8,9 +8,10 @@ class Project(
     var title : String,
     var imageUrl : String,
     var description : String,
-    var onGoingUserCount : Int) : Serializable{
+    var onGoingUserCount : Int,
+    var proofMethod : String) : Serializable{
 
-    constructor() : this(0,"", "", "", 0)
+    constructor() : this(0,"", "", "", 0, "")
 
     companion object {
 
@@ -23,6 +24,8 @@ class Project(
             project.description = jsonObj.getString("description")
 
             project.onGoingUserCount = jsonObj.getInt("ongoing_users_count")
+
+            project.proofMethod = jsonObj.getString("proof_method")
 
             return project
         }
