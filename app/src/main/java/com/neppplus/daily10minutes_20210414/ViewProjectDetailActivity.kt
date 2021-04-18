@@ -34,6 +34,22 @@ class ViewProjectDetailActivity : BaseActivity() {
 
                     if (code == 200) {
 
+                        ServerUtil.getRequestProjectDetail(mContext, mProject.id, object : ServerUtil.JsonResponseHandler {
+                            override fun onResponse(jsonObj: JSONObject) {
+
+                                val dataObj = jsonObj.getJSONObject("data")
+                                val projectObj = dataObj.getJSONObject("project")
+
+                                mProject = Project.getProjectFromJson(projectObj)
+
+                                runOnUiThread {
+                                    refreshDataToUi()
+                                }
+
+                            }
+
+                        })
+
                     }
                     else{
                         runOnUiThread {
