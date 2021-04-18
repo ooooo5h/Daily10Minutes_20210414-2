@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.neppplus.daily10minutes_20210414.datas.Project
+import com.neppplus.daily10minutes_20210414.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_project_detail.*
 import kotlinx.android.synthetic.main.project_list_item.*
+import org.json.JSONObject
 
 class ViewProjectDetailActivity : BaseActivity() {
 
@@ -21,6 +23,23 @@ class ViewProjectDetailActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+        applyBtn.setOnClickListener {
+
+            ServerUtil.postRequestApplyProject(mContext, mProject.id, object : ServerUtil.JsonResponseHandler {
+
+                override fun onResponse(jsonObj: JSONObject) {
+
+
+                }
+
+
+            })
+
+
+
+
+        }
 
     }
 
